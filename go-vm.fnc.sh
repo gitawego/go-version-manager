@@ -1,6 +1,19 @@
 function go_vm(){
     if [ "$1" == "-h" ];then
-        echo "usage: go_vm <version>"
+        echo "manage golang version
+        usage: 
+            install a version of golang: go_vm <version>
+            list installed versions: go_vm list
+            switch a version: go_vm switch <version>
+        "
+        return
+    fi
+    if [ "$1" == "list" ];then
+        ls -la ~/.go/
+        return
+    fi
+    if [ "$1" == "switch" ];then
+        go_vm_switch $2
         return
     fi
     local version=$1
@@ -13,10 +26,6 @@ function go_vm(){
     rm -rf current || true
     ln -s "$(pwd)/$folderName" "$(pwd)/current" 
     cd $dir
-}
-
-function go_vm_list(){
-    ls -la ~/.go/
 }
 
 function go_vm_switch(){
