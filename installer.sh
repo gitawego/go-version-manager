@@ -9,3 +9,5 @@ cd ~
 curl -kL -O https://raw.githubusercontent.com/gitawego/go-version-manager/main/go-vm.fnc.sh
 
 echo "source ./go-vm.fnc.sh" >> ~/.bashrc
+
+cd -
