@@ -47,7 +47,7 @@ function go_vm_switch(){
     local version=$1
     local folderName="go${version}"
 
-    if [ ! -d "$folderName" ];then
+    if [ ! -d "~/.go/$folderName" ];then
         echo "no version $version found locally, installing it"
         go_vm $version
         return
