@@ -1,11 +1,11 @@
-function go_vm(){
+function govm(){
     if [ "$1" == "-h" ];then
         echo "manage golang version
         usage: 
-            install a version of golang: go_vm <version>
-            remove a version of golang: go_vm remove <version>
-            list installed versions: go_vm list
-            switch a version: go_vm switch <version>
+            install a version of golang: govm <version>
+            remove a version of golang: govm remove <version>
+            list installed versions: govm list
+            switch a version: govm switch <version>
         "
         return
     fi

@@ -12,7 +12,7 @@ bash < <(curl -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -Ks -S -L https
 
 ## commands
 
-- install a version: `go_vm 1.18.1`
-- list locally installed versions: `go_vm list`
-- switch to another version: `go_vm switch 1.17.9`
-- remove a version: `go_vm remove 1.17.9`
+- install a version: `govm 1.18.1`
+- list locally installed versions: `govm list`
+- switch to another version: `govm switch 1.17.9`
+- remove a version: `govm remove 1.17.9`
