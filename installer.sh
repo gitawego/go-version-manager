@@ -8,7 +8,8 @@ cd ~
 
 curl -kL -O https://raw.githubusercontent.com/gitawego/go-version-manager/main/go-vm.fnc.sh
 
-echo "source ./go-vm.fnc.sh" >> ~/.bashrc
+grep -qxF 'source ./go-vm.fnc.sh' ~/.bashrc || echo 'source ./go-vm.fnc.sh' >> ~/.bashrc
+
 
 cd -
 
