@@ -12,6 +12,7 @@ bash < <(curl -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -Ks -S -L https
 
 ## commands
 
+- show help: `govm -h`
 - install a version: `govm 1.18.1`
 - list locally installed versions: `govm list`
 - switch to another version: `govm switch 1.17.9`
