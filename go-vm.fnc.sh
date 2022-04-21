@@ -20,7 +20,7 @@ function go_vm(){
     if [ "$1" == "remove" ];then
         echo "removing folder: ~/.go/go$2"
         rm -rf ~/.go/go$2
-        if [ -n "$(ls -la ~/.go/current | grep $2)" ];then
+        if [ -f ~/.go/current ] && [ -n "$(ls -la ~/.go/current | grep $2)" ];then
             rm -f ~/.go/current
             echo "please switch to a new version"
         fi
@@ -35,6 +35,7 @@ function go_vm(){
     mv go $folderName
     rm -f current || true
     ln -s "$(pwd)/$folderName" "$(pwd)/current" 
+    echo "now using go version ${version}"
     cd $dir
 }
 
