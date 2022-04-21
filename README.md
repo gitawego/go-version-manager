@@ -7,7 +7,7 @@ a very simple go version manager
 ## install
 
 ```bash
-bash < <(curl -H 'Pragma: no-cache' -Ks -S -L https://raw.githubusercontent.com/gitawego/go-version-manager/main/installer.sh)
+bash < <(curl -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -Ks -S -L https://raw.githubusercontent.com/gitawego/go-version-manager/main/installer.sh)
 ```
 
 ## commands
