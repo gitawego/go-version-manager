@@ -19,7 +19,7 @@ function go_vm(){
     fi
     if [ "$1" == "remove" ];then
         echo "removing folder: ~/.go/go$2"
-        rm -rf "~/.go/go$2"
+        rm -rf ~/.go/go$2
         if [ -n "$(ls -la ~/.go/current | grep $2)" ];then
             rm -f ~/.go/current
             echo "please switch to a new version"
