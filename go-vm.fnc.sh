@@ -3,6 +3,7 @@ function go_vm(){
         echo "manage golang version
         usage: 
             install a version of golang: go_vm <version>
+            remove a version of golang: go_vm remove <version>
             list installed versions: go_vm list
             switch a version: go_vm switch <version>
         "
@@ -16,6 +17,15 @@ function go_vm(){
         go_vm_switch $2
         return
     fi
+    if [ "$1" == "remove" ];then
+        echo "removing folder: ~/.go/go$2"
+        rm -rf "~/.go/go$2"
+        if [ -n "$(ls -la ~/.go/current | grep $2)" ];then
+            rm -f ~/.go/current
+            echo "please switch to a new version"
+        fi
+        return
+    fi
     local version=$1
     local dir=$(pwd)
     cd ~/.go
@@ -23,7 +33,7 @@ function go_vm(){
     echo "downloading $folderName"
     curl -kLs "https://go.dev/dl/go${version}.linux-amd64.tar.gz" | tar xfz -
     mv go $folderName
-    rm -rf current || true
+    rm -f current || true
     ln -s "$(pwd)/$folderName" "$(pwd)/current" 
     cd $dir
 }
