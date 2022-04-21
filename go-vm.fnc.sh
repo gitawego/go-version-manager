@@ -54,7 +54,7 @@ function go_vm_switch(){
         return
     fi
 
-    rm -rf ~/.go/current || true
+    rm -f ~/.go/current || true
     ln -s ~/.go/$folderName ~/.go/current
     
 }
