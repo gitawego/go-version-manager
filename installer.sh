@@ -14,3 +14,5 @@ grep -qxF 'source ./go-vm.fnc.sh' ~/.bashrc || echo 'source ./go-vm.fnc.sh' >> ~
 cd -
 
 source ~/.bashrc
+
+echo "don't forget to source ~/.bashrc if the `go_vm` is not found"
