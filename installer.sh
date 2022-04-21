@@ -15,4 +15,4 @@ cd -
 
 source ~/.bashrc
 
-echo "don't forget to source ~/.bashrc if the `go_vm` is not found"
+echo "don't forget to source ~/.bashrc if the go_vm is not found"
