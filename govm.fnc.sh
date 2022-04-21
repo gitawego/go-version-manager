@@ -18,12 +18,7 @@ function govm(){
         return
     fi
     if [ "$1" == "remove" ];then
-        echo "removing folder: ~/.go/go$2"
-        rm -rf ~/.go/go$2
-        if [ -L ~/.go/current ] && [ -n "$(ls -la ~/.go/current | grep $2)" ];then
-            rm -f ~/.go/current
-            echo "please switch to a new version"
-        fi
+        go_vm_remove $2
         return
     fi
     local version=$1
@@ -37,6 +32,16 @@ function govm(){
     ln -s "$(pwd)/$folderName" "$(pwd)/current" 
     echo "now using go version ${version}"
     cd $dir
+}
+
+function go_vm_remove(){
+    local version=$1
+    echo "removing folder: ~/.go/go${version}"
+    rm -rf ~/.go/go${version}
+    if [ -L ~/.go/current ] && [ -n "$(ls -la ~/.go/current | grep ${version})" ];then
+        rm -f ~/.go/current
+        echo "please switch to a new version"
+    fi
 }
 
 function go_vm_switch(){
