@@ -44,13 +44,14 @@ function go_vm_install(){
 
 function go_vm_remove(){
     local version=$1
-    echo "removing folder: $GOPATH/go${version}"
+    echo "removing folder: $GO_SDK_LOCATION/go${version}"
     rm -rf $GO_SDK_LOCATION/go${version}
     rm -f $GOPATH/bin/go${version}
     if [ -L $GOPATH/bin/go ] && [ -n "$(ls -la $GOPATH/bin/go | grep ${version})" ];then
         rm -f $GOPATH/bin/go
         echo "please switch to a new version using 'govm switch <version>'"
     fi
+    echo "go version ${version} is removed"
 }
 
 function go_vm_switch(){
