@@ -1,67 +1,72 @@
+GO_BINARIES_URL="https://go.dev/dl"
+GO_PACKAGE_URL="golang.org/dl"
+GO_SDK_LOCATION=$HOME/sdk
+export GOPATH=$HOME/go
+
 function govm(){
-    if [ "$1" == "-h" ];then
-        echo "manage golang version
+    case $1 in
+        list)
+            ls -la $GOPATH/bin/
+            ;;
+
+        switch)
+            go_vm_switch $2
+            ;;
+        remove)
+            go_vm_remove $2
+            ;;
+        install)
+            go_vm_install $2
+            ;;
+        *)
+            echo "manage golang version
         usage: 
-            install a version of golang: govm <version>
+            install a version of golang: govm install <version>
             remove a version of golang: govm remove <version>
             list installed versions: govm list
-            switch a version: govm switch <version>
+            switch to a locally existing version: govm switch <version>
         "
-        return
-    fi
-    if [ "$1" == "list" ];then
-        ls -la ~/.go/
-        return
-    fi
-    if [ "$1" == "switch" ];then
-        go_vm_switch $2
-        return
-    fi
-    if [ "$1" == "remove" ];then
-        go_vm_remove $2
-        return
-    fi
+            ;;
+    esac
+}
+
+function go_vm_install(){
     local version=$1
     local dir=$(pwd)
-    cd ~/.go
-    local folderName="go${version}"
+    cd $HOME
     echo "downloading $folderName"
-    curl -kLs "https://go.dev/dl/go${version}.linux-amd64.tar.gz" | tar xfz -
-    mv go $folderName
-    rm -f current || true
-    ln -s "$(pwd)/$folderName" "$(pwd)/current" 
+    curl -kLs "${GO_BINARIES_URL}/go${version}.linux-amd64.tar.gz" | tar xfz -
+    mv $GOPATH/bin/go $GOPATH/bin/go${version}
+    ln -s $GOPATH/bin/go${version} $GOPATH/bin/go
     echo "now using go version ${version}"
     cd $dir
 }
 
 function go_vm_remove(){
     local version=$1
-    echo "removing folder: ~/.go/go${version}"
-    rm -rf ~/.go/go${version}
-    if [ -L ~/.go/current ] && [ -n "$(ls -la ~/.go/current | grep ${version})" ];then
-        rm -f ~/.go/current
-        echo "please switch to a new version"
+    echo "removing folder: $GOPATH/go${version}"
+    rm -rf $GO_SDK_LOCATION/go${version}
+    rm -f $GOPATH/bin/go${version}
+    if [ -L $GOPATH/bin/go ] && [ -n "$(ls -la $GOPATH/bin/go | grep ${version})" ];then
+        rm -f $GOPATH/bin/go
+        echo "please switch to a new version using 'govm switch <version>'"
     fi
 }
 
 function go_vm_switch(){
-    if [ "$1" == "-h" ];then
-        echo "switch go version
-        usage: go_vm_switch <version>"
-        return
-    fi
     local version=$1
-    local folderName="go${version}"
     echo "switch to version $version"
-    if [ ! -d ~/.go/$folderName ];then
-        echo "no version $version found locally, installing it"
-        go_vm $version
+    if [ ! -f $GOPATH/bin/go ];then
+        go_vm_install $version
         return
     fi
-
-    rm -f ~/.go/current || true
-    ln -s ~/.go/$folderName ~/.go/current
+    go install ${GO_PACKAGE_URL}/go${version}@latest
+    go${version} download
+    rm -f $GOPATH/bin/go || true
+    ln -s $GOPATH/bin/go${version} $GOPATH/bin/go
     
 }
 
-export PATH=~/.go/current/bin:$PATH
+
+
+export PATH=$PATH:$GOPATH/bin
